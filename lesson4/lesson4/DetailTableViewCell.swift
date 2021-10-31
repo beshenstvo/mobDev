@@ -8,8 +8,8 @@
 import UIKit
 
 class DetailTableViewCell: UITableViewCell {
-    @IBOutlet weak var TableViewDetail: UIView!
-    @IBOutlet weak var ImageView: UIImageView!
+    @IBOutlet weak var tableViewDetail: UIView!
+    @IBOutlet weak var imgView: UIImageView! // имена переменных нужно писать с маленькой буквы
     @IBOutlet weak var labelView: UILabel!
     
     override func awakeFromNib() {
