@@ -53,14 +53,12 @@
                                     <constraint firstAttribute="trailing" secondItem="bpN-vJ-F1w" secondAttribute="trailing" id="9E7-Ak-JUn"/>
                                     <constraint firstAttribute="trailing" secondItem="9P9-rj-JIp" secondAttribute="trailing" constant="2.5" id="L59-md-MUr"/>
                                     <constraint firstAttribute="width" constant="414" id="lO1-Dn-ybo"/>
+                                    <constraint firstAttribute="height" constant="88" id="rRN-9T-ivP"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="i6P-U9-9kc">
                                 <rect key="frame" x="0.0" y="90" width="414" height="772"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="772" id="zlt-sK-YcV"/>
-                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImageCell" rowHeight="110" id="yl5-Ba-7ck" customClass="DetailTableViewCell" customModule="lesson4" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="110"/>
@@ -105,9 +103,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="ImageView" destination="0EM-I7-xhR" id="Wyf-xH-upg"/>
-                                            <outlet property="TableViewDetail" destination="LrC-O5-DfG" id="qv8-Xr-OVf"/>
+                                            <outlet property="imgView" destination="0EM-I7-xhR" id="Wyf-xH-upg"/>
                                             <outlet property="labelView" destination="NDj-Aj-ikR" id="J86-Qq-cOq"/>
+                                            <outlet property="tableViewDetail" destination="LrC-O5-DfG" id="qv8-Xr-OVf"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

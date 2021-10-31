@@ -9,6 +9,10 @@ import UIKit
 import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let downloadQueue = DispatchQueue(label: "lesson4-downloadQueue")
+    let imageLoadingQueue = DispatchQueue(label: "lesson4-imageLoadingQueue")
+    
     var imageName: [ImageName] = []{
         didSet{
             DispatchQueue.main.async {
@@ -38,8 +42,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath) as! DetailTableViewCell
         
             if let dir = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
-                let image = UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(imageName[indexPath.row].label!).path)
-                cell.ImageView.image = image
+                imageLoadingQueue.async { // файлы с диска стоит грузить в бэкграунд очереде
+                    let image = UIImage(contentsOfFile: URL(fileURLWithPath: dir.absoluteString).appendingPathComponent(self.imageName[indexPath.row].label!).path)
+                    DispatchQueue.main.async {
+                        cell.imgView.image = image
+                    }
+                    
+                }
+
             }
         cell.labelView.text = imageName[indexPath.row].label
         
@@ -49,17 +59,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func PlusButton(_ sender: Any) {
         guard let url = URL(string: "https://source.unsplash.com/random/110x110") else { return }
         
-        DispatchQueue.global().async { [self] in
+        downloadQueue.async { [self] in // лучше создавать отдельные очереди и обращаться к ним, а не каждый раз создавать новую очередь через  global
             guard let data = try? Data(contentsOf: url) else { return }
             
-            var DocumentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            var documentDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
             
             let uuid = UUID().uuidString
-            DocumentDirectoryPath?.appendPathComponent(uuid)
+            documentDirectoryPath?.appendPathComponent(uuid)
             
-            try? data.write(to: DocumentDirectoryPath!)
-            print(DocumentDirectoryPath!)
-            saveLabel(newLabel: uuid)
+            try? data.write(to: documentDirectoryPath!)
+            print(documentDirectoryPath!)
+            DispatchQueue.main.async { // сохранять в Core Data нужно обязательно с того потока в котором был создан контекст, в данном случае на главном потоке
+                self.saveLabel(newLabel: uuid)
+            }
+            
         }
     }
     
