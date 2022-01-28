@@ -9,7 +9,7 @@ import Foundation
 
 protocol CodeProtocol {
     init(networkService: NetworkServiceMock, model: Code)
-    func checkCode()
+    func checkCode(code: String)
     func viewDidLoadEvent()
     func viewWillAppearEvent()
     func viewWillDisappearEvent()
@@ -39,7 +39,7 @@ final class CodePresenter: CodeProtocol {
         codeView?.willDisappear()
     }
     
-    @objc func checkCode() {
+    @objc func checkCode(code: String) {
         codeView?.changeField()
         
         codeView?.startActivityIndicator()
